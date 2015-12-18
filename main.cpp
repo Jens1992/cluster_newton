@@ -2,10 +2,15 @@
 #include <stdlib.h>
 
 #include <f2c.h>
+
+extern "C" 
+{
+
 #include <clapack.h>
 #include <lapack.h>
 #include <blaswrap.h>
 
+}
 using namespace std;
 
 
@@ -40,6 +45,6 @@ double callFrobenius()
 
 int main ()
 {
-  cout << "Norm is" << callFrobenius() << endl;
+  cout << "Norm is: " << callFrobenius() << endl;
   return 0;
 }
