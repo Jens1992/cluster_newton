@@ -1,0 +1,5 @@
+SET (SOURCES main.cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CLAPACK_INCLUDE_DIR})
+add_executable(cluster_newton_matrix ${SOURCES})
+target_link_libraries(cluster_newton_matrix ${CLAPACK_LIBRARIES})
