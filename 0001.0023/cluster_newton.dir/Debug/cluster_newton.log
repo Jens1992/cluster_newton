@@ -1,0 +1,12 @@
+﻿  main.cpp
+main.cpp(169): warning C4101: "memindex": Unreferenzierte lokale Variable
+main.cpp(262): warning C4101: "info": Unreferenzierte lokale Variable
+main.cpp(1257): warning C4930: "std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>> vector_s_k_minus_1(void)": Funktion mit Prototyp wurde nicht aufgerufen (war eine Variablendefinition gemeint?)
+          with
+          [
+              _Ty=double
+          ]
+main.cpp(1756): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
+main.cpp(1641): warning C4101: "determinante": Unreferenzierte lokale Variable
+x:\studium\cluster_newton-master\0001.0023\main.cpp(412): warning C4715: "func_take_vector_of_matrix": Nicht alle Steuerelementpfade geben einen Wert zurück.
+  cluster_newton.vcxproj -> X:\Studium\cluster_newton-master\build\Debug\cluster_newton.exe
