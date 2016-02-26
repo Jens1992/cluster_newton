@@ -21,11 +21,6 @@
 #ifndef COPASI_copasi
 #define COPASI_copasi
 
-#include <sbml/common/libsbml-namespace.h>
-#include <sedml/common/libsedml-namespace.h>
-
-LIBSBML_CPP_NAMESPACE_USE
-LIBSEDML_CPP_NAMESPACE_USE
 
 #ifdef WIN32
 # pragma warning (disable: 4786)

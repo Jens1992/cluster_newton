@@ -176,7 +176,6 @@ if (NOT EXISTS ${RAPTOR_LIBRARY})
 set (RAPTOR_LIBRARY ${COPASI_DEPENDENCY_DIR}/lib/libraptor.a CACHE FILEPATH "raptor library" FORCE)
 endif()
 
-if (NOT APPLE)
   # clapack
   set (CLAPACK_INCLUDE_DIR ${COPASI_DEPENDENCY_DIR}/include CACHE PATH "clapack include directory" FORCE)
 
@@ -199,7 +198,7 @@ if (NOT APPLE)
   set (BLA_VENDOR "COPASI Dependencies")
   set (CLAPACK_FOUND TRUE)
   mark_as_advanced(CLAPACK_INCLUDE_DIR CLAPACK_LIBRARIES)
-endif()
+
 
 # cpp unit
 if (NOT EXISTS ${CPPUNIT_INCLUDE_DIR})

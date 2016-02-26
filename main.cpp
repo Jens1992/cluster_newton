@@ -12,13 +12,14 @@
 #include <time.h>
 
 #include<math.h>
+#ifdef WIN32
 #include<conio.h>
+#endif
 #include <cstdio>
 
 
 extern "C" 
 {
-
 	#include <clapack.h>
 	#include <lapack.h>
 	#include <blaswrap.h>
@@ -62,7 +63,7 @@ double callFrobenius()
   
 }
 
-vector<vector<double>> func_vector_to_diag_matrix(vector<vector<double>> vector_input, int nRows, int nCols, string row_or_col_vec)
+vector<vector<double > > func_vector_to_diag_matrix(vector<vector<double > > vector_input, int nRows, int nCols, string row_or_col_vec)
 {
 	/**************************************************************************************************************
 	* this function creates from a vector given as a matrix with either only 1 column or 1 row a diagonal matrix  *
@@ -79,7 +80,7 @@ vector<vector<double>> func_vector_to_diag_matrix(vector<vector<double>> vector_
 		nRowCol = nRows;
 	}
 
-	vector<vector<double>> matrix(nRowCol, vector<double>(nRowCol));
+	vector<vector<double > > matrix(nRowCol, vector<double>(nRowCol));
 	
 	for (int i = 0; i < nRowCol; i++)
 	{
@@ -110,7 +111,7 @@ vector<vector<double>> func_vector_to_diag_matrix(vector<vector<double>> vector_
 	***************************************************************************************************************/
 }
 
-void matrix_output(vector<vector<double>> matrix, int rows, int cols, string text_before, string text_after)
+void matrix_output(vector<vector<double > > matrix, int rows, int cols, string text_before, string text_after)
 {
 	cout << text_before + "\n";
 
@@ -127,14 +128,14 @@ void matrix_output(vector<vector<double>> matrix, int rows, int cols, string tex
 	cout << text_after + "\n\n";
 }
 
-vector<vector<double>> func_double_star_to_vector_matrix(double* double_array, int nRows, int nCols)
+vector<vector<double > > func_double_star_to_vector_matrix(double* double_array, int nRows, int nCols)
 
 {
 	/****************************************************************************************************
-	* This function converts a double* array to a vector<vector<double>> matrix.						*
+	* This function converts a double* array to a vector<vector<double > > matrix.						*
 	*****************************************************************************************************/
 
-	vector<vector<double>> matrix(nRows, vector<double>(nCols));
+	vector<vector<double > > matrix(nRows, vector<double>(nCols));
 	int array_length;
 	int memindex;
 
@@ -158,13 +159,13 @@ vector<vector<double>> func_double_star_to_vector_matrix(double* double_array, i
 
 }
 
-vector<vector<double>> func_double_star_star_to_vector_matrix(double** double_array, int nRows, int nCols)
+vector<vector<double > > func_double_star_star_to_vector_matrix(double** double_array, int nRows, int nCols)
 {
 	/****************************************************************************************************
-	* This function converts a double** array to a vector<vector<double>> matrix.						*
+	* This function converts a double** array to a vector<vector<double > > matrix.						*
 	*****************************************************************************************************/
 
-	vector<vector<double>> matrix(nRows, vector<double>(nCols));
+	vector<vector<double > > matrix(nRows, vector<double>(nCols));
 	int array_length;
 	int memindex;
 
@@ -185,10 +186,10 @@ vector<vector<double>> func_double_star_star_to_vector_matrix(double** double_ar
 	*****************************************************************************************************/
 }
 
-double* func_vector_matrix_to_double_star(vector<vector<double>> matrix, int nRows, int nCols)
+double* func_vector_matrix_to_double_star(vector<vector<double > > matrix, int nRows, int nCols)
 {
 	/****************************************************************************************************
-	* This function converts a vector<vector<double>> matrix into a double* array i.e. to use it in		*
+	* This function converts a vector<vector<double > > matrix into a double* array i.e. to use it in		*
 	* the function inverse to create inverse matrices.													*
 	*****************************************************************************************************/
 
@@ -261,7 +262,7 @@ void LGS(complex *matrix)
 	complex b[3];
 	integer info;
 
-	matrix = new complex();
+  matrix = new complex[9];//();
 	
 
 //	doublereal* matrix = (doublereal*)malloc(sizeof(doublereal)*rows*cols);
@@ -300,9 +301,9 @@ void LGS(complex *matrix)
 
 // functions used in general
 
-vector<vector<double>> func_matrix_addition(vector< vector<double>> matrixA, vector< vector<double>> matrixB, int nZeilen, int nSpalten)
+vector<vector<double > > func_matrix_addition(vector< vector<double > > matrixA, vector< vector<double > > matrixB, int nZeilen, int nSpalten)
 {
-	vector< vector<double>> matrixC(nZeilen, vector<double>(nSpalten));
+	vector< vector<double > > matrixC(nZeilen, vector<double>(nSpalten));
 
 	for (int i = 0; i < nZeilen; i++)
 	{
@@ -315,9 +316,9 @@ vector<vector<double>> func_matrix_addition(vector< vector<double>> matrixA, vec
 	return matrixC;
 }
 
-vector<vector<double>> func_matrix_difference(vector< vector<double>> matrixA, vector< vector<double>> matrixB, int nZeilen, int nSpalten)
+vector<vector<double > > func_matrix_difference(vector< vector<double > > matrixA, vector< vector<double > > matrixB, int nZeilen, int nSpalten)
 {
-	vector< vector<double>> matrixC(nZeilen, vector<double>(nSpalten));
+	vector< vector<double > > matrixC(nZeilen, vector<double>(nSpalten));
 
 	for (int i = 0; i < nZeilen; i++)
 	{
@@ -335,7 +336,7 @@ vector<vector<double>> func_matrix_difference(vector< vector<double>> matrixA, v
 * calculates the 2 norm of a vector																			*
 *************************************************************************************************************/
 
-double func_2_norm(vector<vector<double>> vector_matrix, int rows, int cols, string row_or_col)
+double func_2_norm(vector<vector<double > > vector_matrix, int rows, int cols, string row_or_col)
 {
 	double sum_2_norm = 0;
 
@@ -364,7 +365,7 @@ double func_2_norm(vector<vector<double>> vector_matrix, int rows, int cols, str
 * calculates the 2 norm of a vector																			*
 *************************************************************************************************************/
 
-vector<double> func_get_diag(vector<vector<double>> matrix, int nZeilen, int nSpalten)
+vector<double> func_get_diag(vector<vector<double > > matrix, int nZeilen, int nSpalten)
 {
 	vector<double> diagonal_elements;
 
@@ -383,10 +384,10 @@ vector<double> func_get_diag(vector<vector<double>> matrix, int nZeilen, int nSp
 	return diagonal_elements;
 }
 
-vector<vector<double>> func_take_vector_of_matrix(vector<vector<double>> matrix, int rows, int cols, int vector_row_or_col_nr, string row_or_col)
+vector<vector<double > > func_take_vector_of_matrix(vector<vector<double > > matrix, int rows, int cols, int vector_row_or_col_nr, string row_or_col)
 {
-	vector<vector<double>> row_vector(1, vector<double>(cols));
-	vector<vector<double>> col_vector(rows, vector<double>(1));
+	vector<vector<double > > row_vector(1, vector<double>(cols));
+	vector<vector<double > > col_vector(rows, vector<double>(1));
 
 	if (row_or_col == "row")
 	{
@@ -411,7 +412,7 @@ vector<vector<double>> func_take_vector_of_matrix(vector<vector<double>> matrix,
 	}	
 }
 //func_add_vector_to_matrix(Xinverse_mult_X_mult_Y_transpose, 1, m + 1, i, "row", A);
-vector<vector<double>> func_add_vector_to_matrix(vector<vector<double>> add_vector, int rows, int cols, int vector_row_or_col_nr, string row_or_col, vector<vector<double>> matrix)
+vector<vector<double > > func_add_vector_to_matrix(vector<vector<double > > add_vector, int rows, int cols, int vector_row_or_col_nr, string row_or_col, vector<vector<double > > matrix)
 {
 	if (row_or_col == "row")
 	{
@@ -434,9 +435,9 @@ vector<vector<double>> func_add_vector_to_matrix(vector<vector<double>> add_vect
 	return matrix;
 }
 
-vector<vector<double>> func_create_x_tilde(vector<vector<double>> X, int m, int l)
+vector<vector<double > > func_create_x_tilde(vector<vector<double > > X, int m, int l)
 {
-	vector<vector<double>> X_tilde(m+1,vector<double>(l));
+	vector<vector<double > > X_tilde(m+1,vector<double>(l));
 
 	for (int i = 0; i <= m; i++)
 	{
@@ -457,9 +458,9 @@ vector<vector<double>> func_create_x_tilde(vector<vector<double>> X, int m, int 
 	return X_tilde;
 }
 
-vector<vector<double>> func_matrix_transpose(vector<vector<double>> matrix, int nZeilen, int nSpalten)
+vector<vector<double > > func_matrix_transpose(vector<vector<double > > matrix, int nZeilen, int nSpalten)
 {
-	vector<vector<double>> transposed_matrix;
+	vector<vector<double > > transposed_matrix;
 
 	for (int col_nr = 0; col_nr < nSpalten; col_nr++)
 	{
@@ -474,15 +475,15 @@ vector<vector<double>> func_matrix_transpose(vector<vector<double>> matrix, int 
 	return transposed_matrix;
 }
 
-vector<vector<double>> func_matrix_multiplication(vector<vector<double>> matrixA
-	, vector<vector<double>> matrixB
+vector<vector<double > > func_matrix_multiplication(vector<vector<double > > matrixA
+	, vector<vector<double > > matrixB
 	, int nZeilen_matrixA
 	, int nSpalten_matrixA
 	, int nZeilen_matrixB
 	, int nSpalten_matrixB
 	)
 {
-	vector<vector<double>> matrixC(nZeilen_matrixA, vector<double>(nSpalten_matrixB));
+	vector<vector<double > > matrixC(nZeilen_matrixA, vector<double>(nSpalten_matrixB));
 	double new_element = 0;
 
 	if (nSpalten_matrixA != nZeilen_matrixB)
@@ -515,8 +516,8 @@ vector<vector<double>> func_matrix_multiplication(vector<vector<double>> matrixA
 	return matrixC;
 }
 
-vector<vector<double>> func_matrix_scalar_multiplication(double scalar
-	, vector<vector<double>> matrix
+vector<vector<double > > func_matrix_scalar_multiplication(double scalar
+	, vector<vector<double > > matrix
 	, int nZeilen
 	, int nSpalten
 	)
@@ -538,10 +539,10 @@ vector<vector<double>> func_matrix_scalar_multiplication(double scalar
 
 */
 
-double det(int n, vector<vector<double>> matrix)
+double det(int n, vector<vector<double > > matrix)
 {
 	int c, subi, i, j, subj;
-	vector<vector<double>> submatrix(n, vector<double>(n));
+	vector<vector<double > > submatrix(n, vector<double>(n));
 	double determinante = 0;
 	if (n == 2)
 	{
@@ -680,9 +681,9 @@ double** func_get_random_points(double* min_range
 *********************************************************************************************************/
 
 
-vector<vector<double>> func_get_random_vector_near_ystar(vector<double> ystar)
+vector<vector<double > > func_get_random_vector_near_ystar(vector<double> ystar)
 {
-	vector<vector<double>> random_points(number_of_equations, vector<double>(number_of_random_points));
+	vector<vector<double > > random_points(number_of_equations, vector<double>(number_of_random_points));
 	double random_number;
 
 	vector<double> min_range(number_of_equations);
@@ -748,7 +749,7 @@ vector<vector<double>> func_get_random_vector_near_ystar(vector<double> ystar)
 * Calculate the forward problem y = f(x)																*
 *********************************************************************************************************/
 
-vector<vector<double>> calculate_forward_problem(vector<vector<double>> x, int xRows, int xCols, int yRows)
+vector<vector<double > > calculate_forward_problem(vector<vector<double > > x, int xRows, int xCols, int yRows)
 {
 	// yRows is the number of equations (n)
 	// xRows is the number of parameters (m)
@@ -758,7 +759,7 @@ vector<vector<double>> calculate_forward_problem(vector<vector<double>> x, int x
 	// y: n x l
 
 	int yCols = xCols;
-	vector<vector<double>> y(yRows,vector<double>(yCols));
+	vector<vector<double > > y(yRows,vector<double>(yCols));
 	
 	// example of values of y created by forward problem (the real forward problem algorithm has to be called here!)
 	int memindex = 0;
@@ -788,11 +789,11 @@ vector<vector<double>> calculate_forward_problem(vector<vector<double>> x, int x
 * Construct a linear approximation of f by calculating the regression coefficients						*
 *********************************************************************************************************/
 
-vector<vector<double>> func_calculate_regression_parameters(int m
+vector<vector<double > > func_calculate_regression_parameters(int m
 	, int l
 	, int n
-	, vector<vector<double>> X
-	, vector<vector<double>> Y
+	, vector<vector<double > > X
+	, vector<vector<double > > Y
 	)
 {
 	/****************************************************************************************************
@@ -801,21 +802,21 @@ vector<vector<double>> func_calculate_regression_parameters(int m
 	* https://de.wikipedia.org/wiki/Lineare_Regression#Sch.C3.A4tzung_der_Regressionskoeffizienten_2/	*
 	* formula: b = (X^T * X)^(-1) * X^T * Y																*
 	*****************************************************************************************************/
-	vector<vector<double>> X_tilde(m + 1, vector<double>(l));
+	vector<vector<double > > X_tilde(m + 1, vector<double>(l));
 
-	vector<vector<double>> A_tilde(n, vector<double>(m+1));
+	vector<vector<double > > A_tilde(n, vector<double>(m+1));
 
-	vector<vector<double>> Xtranspose(l, vector<double>(m+1));
-	vector<vector<double>> Xmultiplication(m+1, vector<double>(m+1));
-	vector <vector<double>> Xinverse(m+1, vector<double>(m+1));
+	vector<vector<double > > Xtranspose(l, vector<double>(m+1));
+	vector<vector<double > > Xmultiplication(m+1, vector<double>(m+1));
+	vector <vector<double > > Xinverse(m+1, vector<double>(m+1));
 	double* Xmultiplication_double_array = new double[m+1*m+1];
-	vector<vector<double>> Xinverse_mult_X(m+1, vector<double>(l));
+	vector<vector<double > > Xinverse_mult_X(m+1, vector<double>(l));
 
-	vector<vector<double>> y_vector(1, vector<double>(l));
-	vector<vector<double>> y_vector_transpose(l, vector<double>(1));
+	vector<vector<double > > y_vector(1, vector<double>(l));
+	vector<vector<double > > y_vector_transpose(l, vector<double>(1));
 
-	vector<vector<double>> Xinverse_mult_X_mult_Y(m+1, vector<double>(1)); // Column vector	
-	vector<vector<double>> Xinverse_mult_X_mult_Y_transpose(1, vector<double>(m+1));
+	vector<vector<double > > Xinverse_mult_X_mult_Y(m+1, vector<double>(1)); // Column vector	
+	vector<vector<double > > Xinverse_mult_X_mult_Y_transpose(1, vector<double>(m+1));
 
 	/*****************************************************************************
 	* create X~ out of X according to (2.22) on page B23						 *
@@ -841,7 +842,7 @@ vector<vector<double>> func_calculate_regression_parameters(int m
 	//matrix_output(Xmultiplication, m+1, m+1, "Xmultiplication", "ende Xmultiplication");
 	
 	/*****************************************************************************
-	* Convert the vector<vector<double>> matrix Xmultiplication into a double*	 *
+	* Convert the vector<vector<double > > matrix Xmultiplication into a double*	 *
 	* array. This is necessary because the matrix inversion function needs a	 *
 	* double* array.															 *
 	* It is saved to Xmultiplication_double_array								 *
@@ -862,7 +863,7 @@ vector<vector<double>> func_calculate_regression_parameters(int m
 	
 	/*****************************************************************************
 	* The inverse double* Xmultiplication_double_array is saved to Xinverse by	 *
-	* converting the double* array back to a vector<vector<double>> matrix		 *
+	* converting the double* array back to a vector<vector<double > > matrix		 *
 	******************************************************************************/
 	Xinverse = func_double_star_to_vector_matrix(Xmultiplication_double_array, m+1, m+1);
 	//matrix_output(Xinverse, m + 1, m + 1, "Xinverse", "ende Xinverse");
@@ -941,13 +942,13 @@ vector<vector<double>> func_calculate_regression_parameters(int m
 * B21.																									*
 *********************************************************************************************************/
 
-vector<vector<double>> func_extact_A_from_A_tilde(vector<vector<double>> A_tilde, int n, int m)
+vector<vector<double > > func_extact_A_from_A_tilde(vector<vector<double > > A_tilde, int n, int m)
 {
 	/****************************************************************************************************
 	* takes A out of A_tilde																			*
 	*****************************************************************************************************/
 
-	vector<vector<double>> A(n,vector<double> (m));
+	vector<vector<double > > A(n,vector<double> (m));
 
 	for (int i = 0; i < n; i++)
 	{
@@ -964,13 +965,13 @@ vector<vector<double>> func_extact_A_from_A_tilde(vector<vector<double>> A_tilde
 	*****************************************************************************************************/
 }
 
-vector<vector<double>> func_extract_y0_from_A_tilde(vector<vector<double>> A_tilde, int n, int m)
+vector<vector<double > > func_extract_y0_from_A_tilde(vector<vector<double > > A_tilde, int n, int m)
 {
 	/****************************************************************************************************
 	* takes out y0 out of A_tilde																		*
 	*****************************************************************************************************/
 
-	vector<vector<double>> y0(n,vector<double>(1));
+	vector<vector<double > > y0(n,vector<double>(1));
 
 	for (int i = 0; i < n; i++)
 	{
@@ -984,7 +985,7 @@ vector<vector<double>> func_extract_y0_from_A_tilde(vector<vector<double>> A_til
 	*****************************************************************************************************/
 }
 
-vector<vector<double>> func_find_update_vector(double* xDach, int m, int n, int l, vector<vector<double>> A, vector<vector<double>> ystar_matrix, vector<vector<double>> X, vector<vector<double>> y0)
+vector<vector<double > > func_find_update_vector(double* xDach, int m, int n, int l, vector<vector<double > > A, vector<vector<double > > ystar_matrix, vector<vector<double > > X, vector<vector<double > > y0)
 {
 	/****************************************************************************************************
 	* This function creates an update vector s by using (2.25) as the formula for this calculation		*
@@ -997,22 +998,22 @@ vector<vector<double>> func_find_update_vector(double* xDach, int m, int n, int 
 	* the corresponding column vector of the update matrix has to be used.								*
 	*****************************************************************************************************/
 
-	vector<vector<double>> diag_x_dach(m,vector<double>(m));
-	vector<vector<double>> vector_xDach(1,vector<double>(m));
-	vector<vector<double>> square_diag_x_dach(m, vector<double>(m));
-	vector<vector<double>> A_transpose(m, vector<double>(n));
-	vector<vector<double>> A_sq_diag_mult_A_transpose(m, vector<double>(n));
+	vector<vector<double > > diag_x_dach(m,vector<double>(m));
+	vector<vector<double > > vector_xDach(1,vector<double>(m));
+	vector<vector<double > > square_diag_x_dach(m, vector<double>(m));
+	vector<vector<double > > A_transpose(m, vector<double>(n));
+	vector<vector<double > > A_sq_diag_mult_A_transpose(m, vector<double>(n));
 
-	vector<vector<double>> A_mult_sq_diag(n, vector<double>(m));
-	vector<vector<double>> A_mult_sq_diag_mult_Atranspose(n, vector<double>(n));
+	vector<vector<double > > A_mult_sq_diag(n, vector<double>(m));
+	vector<vector<double > > A_mult_sq_diag_mult_Atranspose(n, vector<double>(n));
 	double* A_mult_sq_diag_mult_Atranspose_double_star = new double[n*n];
-	vector<vector<double>> A_mult_sq_diag_mult_Atranspose_inversion(n, vector<double>(n));
+	vector<vector<double > > A_mult_sq_diag_mult_Atranspose_inversion(n, vector<double>(n));
 
-	vector<vector<double>> A_mult_X(n, vector<double>(l));
-	vector<vector<double>> third_part_difference(n, vector<double>(l));
-	vector<vector<double>> y0_matrix(n, vector<double>(l));
+	vector<vector<double > > A_mult_X(n, vector<double>(l));
+	vector<vector<double > > third_part_difference(n, vector<double>(l));
+	vector<vector<double > > y0_matrix(n, vector<double>(l));
 
-	vector<vector<double>> s(m, vector<double>(l));
+	vector<vector<double > > s(m, vector<double>(l));
 
 	/****************************************************************************************************
 	* convert double* array vector to vector<vector<double>>(1,vector<double>(m)) matrix vector			*
@@ -1062,7 +1063,7 @@ vector<vector<double>> func_find_update_vector(double* xDach, int m, int n, int 
 	// do the inversion, inverse matrix is saved in A_mult_sq_diag_mult_Atranspose_double_star as double* array
 	inverse(A_mult_sq_diag_mult_Atranspose_double_star, n);
 
-	// convert double* array matrix into vector<vector<double>> matrix
+	// convert double* array matrix into vector<vector<double > > matrix
 	A_mult_sq_diag_mult_Atranspose_inversion = func_double_star_to_vector_matrix(A_mult_sq_diag_mult_Atranspose_double_star, n, n);
 
 	/****************************************************************************************************
@@ -1112,10 +1113,10 @@ vector<vector<double>> func_find_update_vector(double* xDach, int m, int n, int 
 * Subsequent creating the new x values by adding the update vector										*
 *********************************************************************************************************/
 
-vector<vector<double>> func_shrink_vector(vector<vector<double>> input_s, vector<vector<double>> X, double* min_Range, double* max_Range, double factor, int n, int m, int l)
+vector<vector<double > > func_shrink_vector(vector<vector<double > > input_s, vector<vector<double > > X, double* min_Range, double* max_Range, double factor, int n, int m, int l)
 {
-	vector<vector<double>> output_s(m, vector<double>(l));
-	vector<vector<double>> working_vector(m, vector<double>(1));
+	vector<vector<double > > output_s(m, vector<double>(l));
+	vector<vector<double > > working_vector(m, vector<double>(1));
 	bool bool_half;
 	output_s = input_s;
 
@@ -1245,30 +1246,30 @@ vector<vector<double>> func_shrink_vector(vector<vector<double>> input_s, vector
 /********************************************************************************************************
 * update Jacobian with Broyden'S method																	*
 *********************************************************************************************************/
-vector<vector<double>> func_update_Jacobian(vector<vector<vector<vector<double>>>> Js_K2, int memindexK2, vector<vector<vector<double>>> s_K2, vector<vector<double>> y, vector<vector<double>>random_points_near_ystar, int n, int m, int l, int xl)
+vector<vector<double > > func_update_Jacobian(vector<vector<vector<vector<double > > > > Js_K2, int memindexK2, vector<vector<vector<double > > > s_K2, vector<vector<double > > y, vector<vector<double> >random_points_near_ystar, int n, int m, int l, int xl)
 {
 	// random_points_near_ystar: n x l
 	// y: n x l
-	// Js_K2: (K2-(K1+1), vector<vector<vector<double>>>(l, vector<vector<double>>(n, vector<double>(m))));
+	// Js_K2: (K2-(K1+1), vector<vector<vector<double > > >(l, vector<vector<double>>(n, vector<double>(m))));
 	// s_K2: (K2-(K1+1), vector<vector<double>>(m, vector<double>(l))); 
 	// memindexK2 current run index for the for loop of K2 (starts with 0)
 
-	vector<vector<double>> J(n, vector<double>(m));
-	vector<vector<double>> vector_s_k_minus_1();
+	vector<vector<double > > J(n, vector<double>(m));
+	vector<vector<double > > vector_s_k_minus_1();
 
-	vector<vector<double>> y_difference(n, vector<double>(1));
-	vector<vector<double>> y_vector(n, vector<double>(1));
-	vector<vector<double>> y_star_vector(n, vector<double>(1));
+	vector<vector<double > > y_difference(n, vector<double>(1));
+	vector<vector<double > > y_vector(n, vector<double>(1));
+	vector<vector<double > > y_star_vector(n, vector<double>(1));
 
-	vector<vector<double>> s_vector(m, vector<double>(1));
-	vector<vector<double>> s_vector_transpose(1, vector<double>(m));
+	vector<vector<double > > s_vector(m, vector<double>(1));
+	vector<vector<double > > s_vector_transpose(1, vector<double>(m));
 	double s_vector_2_norm;
 
-	vector<vector<double>> s_vector_division(1, vector<double>(m));
+	vector<vector<double > > s_vector_division(1, vector<double>(m));
 
-	vector<vector<double>> second_times_third_part(n, vector<double>(m));
+	vector<vector<double > > second_times_third_part(n, vector<double>(m));
 
-	vector<vector<double>> resulting_J(n, vector<double>(m));
+	vector<vector<double > > resulting_J(n, vector<double>(m));
 
 	//for (int xl = 0; xl < l; xl++)
 	//{
@@ -1374,29 +1375,29 @@ vector<vector<double>> func_update_Jacobian(vector<vector<vector<vector<double>>
 * find search direction vector s																		*
 *********************************************************************************************************/
 
-vector<vector<double>> func_calculate_search_direction_vector(double* xDach, vector<vector<double>> J, vector<vector<double>> y, vector<vector<double>>random_points_near_ystar, int n, int m, int l, int xl)
+vector<vector<double > > func_calculate_search_direction_vector(double* xDach, vector<vector<double > > J, vector<vector<double > > y, vector<vector<double> >random_points_near_ystar, int n, int m, int l, int xl)
 {
-	// vector<vector<double>> J(vector<vector<double>>(number_of_equations, vector<double>(number_of_parameters_from_copasi)));
+	// vector<vector<double > > J(vector<vector<double>>(number_of_equations, vector<double>(number_of_parameters_from_copasi)));
 	// random_points_near_ystar: n x l
 	// y: n x l
 
-	vector<vector<double>> vector_xDach(1, vector<double>(m));
-	vector<vector<double>> diag_x_dach(m, vector<double>(m));
-	vector<vector<double>> square_diag_x_dach(m, vector<double>(m));
-	vector<vector<double>> J_transpose(m, vector<double>(n));
-	vector<vector<double>> diag_mult_J_transpose(m, vector<double>(n));
+	vector<vector<double > > vector_xDach(1, vector<double>(m));
+	vector<vector<double > > diag_x_dach(m, vector<double>(m));
+	vector<vector<double > > square_diag_x_dach(m, vector<double>(m));
+	vector<vector<double > > J_transpose(m, vector<double>(n));
+	vector<vector<double > > diag_mult_J_transpose(m, vector<double>(n));
 
-	vector<vector<double>> second_part_first(n, vector<double>(m));
-	vector<vector<double>> second_part(n, vector<double>(n));
+	vector<vector<double > > second_part_first(n, vector<double>(m));
+	vector<vector<double > > second_part(n, vector<double>(n));
 
 	double* second_part_double_array;
 
-	vector<vector<double>> second_part_inverse(n, vector<double>(n));
-	vector<vector<double>> y_vector(n, vector<double>(1));
-	vector<vector<double>> y_star_vector(n, vector<double>(1));
-	vector<vector<double>> third_part(n, vector<double>(1));
-	vector<vector<double>> first_times_second(m, vector<double>(n));
-	vector<vector<double>> first_times_second_times_third(m, vector<double>(1));
+	vector<vector<double > > second_part_inverse(n, vector<double>(n));
+	vector<vector<double > > y_vector(n, vector<double>(1));
+	vector<vector<double > > y_star_vector(n, vector<double>(1));
+	vector<vector<double > > third_part(n, vector<double>(1));
+	vector<vector<double > > first_times_second(m, vector<double>(n));
+	vector<vector<double > > first_times_second_times_third(m, vector<double>(1));
 
 	/************************************************************************************************
 	* convert double xDach to vector_xDach															*
@@ -1435,7 +1436,7 @@ vector<vector<double>> func_calculate_search_direction_vector(double* xDach, vec
 	second_part = func_matrix_multiplication(second_part_first, J_transpose, n, m, m, n);
 
 	/****************************************************************************************************
-	* convert vector<vector<double>> matrix to double array												*
+	* convert vector<vector<double > > matrix to double array												*
 	*****************************************************************************************************/
 	second_part_double_array = func_vector_matrix_to_double_star(second_part, n,n);
 
@@ -1445,7 +1446,7 @@ vector<vector<double>> func_calculate_search_direction_vector(double* xDach, vec
 	inverse(second_part_double_array,n);
 
 	/****************************************************************************************************
-	* convert inverse double array to vector<vector<double>> matrix										*
+	* convert inverse double array to vector<vector<double > > matrix										*
 	*****************************************************************************************************/
 	second_part_inverse = func_double_star_to_vector_matrix(second_part_double_array, n, n);
 
@@ -1492,10 +1493,10 @@ vector<vector<double>> func_calculate_search_direction_vector(double* xDach, vec
 * Subsequent creating the new x values by adding the search direction vector							*
 *********************************************************************************************************/
 
-vector<vector<double>> func_shrink_vector_broyden(vector<vector<double>> input_s, vector<vector<double>> X, double* min_Range, double* max_Range, double factor, int n, int m, int l)
+vector<vector<double > > func_shrink_vector_broyden(vector<vector<double > > input_s, vector<vector<double > > X, double* min_Range, double* max_Range, double factor, int n, int m, int l)
 {
-	vector<vector<double>> output_s(m, vector<double>(1));
-	vector<vector<double>> working_vector(m, vector<double>(1));
+	vector<vector<double > > output_s(m, vector<double>(1));
+	vector<vector<double > > working_vector(m, vector<double>(1));
 	bool bool_half;
 	output_s = input_s;
 
@@ -1628,43 +1629,43 @@ int main()
 	vector<double> diag_elements(3);
 
 	// Example of transposed matrix
-	vector<vector<double>> transposed_matrix;
+	vector<vector<double > > transposed_matrix;
 
 	// Example of testing matrix multiplication
-	vector<vector<double>> multiplied_matrix;
-	vector<vector<double>> matrixD_test(4, vector<double>(5));
+	vector<vector<double > > multiplied_matrix;
+	vector<vector<double > > matrixD_test(4, vector<double>(5));
 
 	// Example of scalar matrix mulitplication
-	vector<vector<double>> scalar_product_matrix(3, vector<double>(4));
+	vector<vector<double > > scalar_product_matrix(3, vector<double>(4));
 
 	// Example of calculating determinante
 	double determinante;
-	vector<vector<double>> double_matrix_3x3(3, vector<double>(3));
+	vector<vector<double > > double_matrix_3x3(3, vector<double>(3));
 
 	// getting random_point
 	double** random_points = 0;
-	vector<vector<double>> vector_matrix_random_points_x(number_of_parameters_from_copasi, vector<double>(number_of_random_points));
+	vector<vector<double > > vector_matrix_random_points_x(number_of_parameters_from_copasi, vector<double>(number_of_random_points));
 	// all X matrices are saved in this 3 dimensional array 
 	// the first dimension of this matrix has to be K1+1 because of K1+1 is the number of iterations 
-	vector<vector<vector<double>>> Xs_K1(K1+1, vector<vector<double>>(number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
+	vector<vector<vector<double > > > Xs_K1(K1+1, vector<vector<double> >(number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
 	// all s matrices are saved in this 3 dimensional array
 	// this is the update vector from Stage 1
-	vector<vector<vector<double>>> s_K1(K1+1, vector<vector<double>>(number_of_parameters_from_copasi, vector<double>(number_of_random_points))); 
+	vector<vector<vector<double > > > s_K1(K1+1, vector<vector<double> >(number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
 
 	// getting random points near y*
-	vector<vector<double>> random_points_near_ystar;
+	vector<vector<double > > random_points_near_ystar;
 
 	// getting y out of the forward problem stage 1, 2-1 
-	vector<vector<double>> y;
-	vector<vector<double>> x(number_of_parameters_from_copasi, vector<double>(number_of_random_points));
+	vector<vector<double > > y;
+	vector<vector<double > > x(number_of_parameters_from_copasi, vector<double>(number_of_random_points));
 
 	/*// declaration of variables for regression coefficient calculation, stage 1, 2-2
 	int x_rows = 4; // Punkte pro Parameter
 	int x_cols = 1; // Sollte immer eins sein, da immer nur ein Paramter geschätzt werden soll, sonst werden die Parameter addiert und ergeben zusammen Y, aber das soll so ja nicht sein. Es soll ja eher so sein, dass ein Parameter einen Wert bekommt aus dem forwadrd Problem (Y) und dann soll für alle Punkte des Paramters der Wert geschätzt werden, der benötigt wird um Y zu erzeugen.  Evtl muss hier vllt auch 2 stehen, wenn der 2. Wert eine 1 bekommt, damit man einen y-achsenabschnitt mit schätzen lassen kann.
 	int y_rows = 4; // Ergebnisse aus der Parameter
-	vector<vector<double>> X(x_rows, vector<double>(x_cols));
-	vector<vector<double>> Y(y_rows, vector<double>(1));
-	vector<vector<double>> b(x_cols, vector<double>(1)); // Rows: x_cols; cols: 1*/
+	vector<vector<double > > X(x_rows, vector<double>(x_cols));
+	vector<vector<double > > Y(y_rows, vector<double>(1));
+	vector<vector<double > > b(x_cols, vector<double>(1)); // Rows: x_cols; cols: 1*/
 
 
 	// declaration of variables for regression coefficient calculation, stage 1, 2-2
@@ -1673,42 +1674,43 @@ int main()
 	int x_cols = number_of_random_points; 
 	int y_rows = number_of_equations; // n
 	int y_cols = number_of_random_points; // l
-	vector<vector<double>> X(x_rows, vector<double>(x_cols));
-	vector<vector<double>> Y(y_rows, vector<double>(y_cols));
-	vector<vector<double>> A_tilde(number_of_random_points, vector<double>(number_of_parameters_from_copasi+1));	
+	vector<vector<double > > X(x_rows, vector<double>(x_cols));
+	vector<vector<double > > Y(y_rows, vector<double>(y_cols));
+	vector<vector<double > > A_tilde(number_of_random_points, vector<double>(number_of_parameters_from_copasi+1));	
 
 	// find update vector
 
-	vector<vector<double>> s(number_of_parameters_from_copasi,vector<double>(number_of_random_points));
-	vector<vector<double>> A(number_of_equations,vector<double>(number_of_parameters_from_copasi));
-	vector<vector<double>> y0(number_of_equations,vector<double>(1));
+	vector<vector<double > > s(number_of_parameters_from_copasi,vector<double>(number_of_random_points));
+	vector<vector<double > > A(number_of_equations,vector<double>(number_of_parameters_from_copasi));
+	vector<vector<double > > y0(number_of_equations,vector<double>(1));
 
 	// Shrink update vector
 
-	vector<vector<double>> shrinked_s(number_of_parameters_from_copasi, vector<double>(number_of_random_points));
-	vector<vector<double>> X_K1_plus_1(number_of_parameters_from_copasi, vector<double>(number_of_random_points));
+	vector<vector<double > > shrinked_s(number_of_parameters_from_copasi, vector<double>(number_of_random_points));
+	vector<vector<double > > X_K1_plus_1(number_of_parameters_from_copasi, vector<double>(number_of_random_points));
 
 	// Stage 2
 	// all Jacobians used in Stage 2 are saved here
-	vector<vector<vector<vector<double>>>> Js_K2(K2-(K1+1)+1, vector<vector<vector<double>>>(number_of_random_points, vector<vector<double>>(number_of_equations, vector<double>(number_of_parameters_from_copasi))));
+
+  vector< vector< vector< vector< double > > > > Js_K2(K2-(K1+1)+1, vector<vector<vector<double > > >(number_of_random_points, vector<vector<double> >(number_of_equations, vector<double>(number_of_parameters_from_copasi))));
 	
 	// current Jacobian J
-	vector<vector<double>> J(vector<vector<double>>(number_of_equations, vector<double>(number_of_parameters_from_copasi)));
+	vector<vector<double > > J(vector<vector<double> >(number_of_equations, vector<double>(number_of_parameters_from_copasi)));
 
 	// all s matrices are saved in this 3 dimensional array
 	// this is the search direction vector from Stage 2
-	vector<vector<vector<double>>> s_K2(K2 - (K1 + 1)+1, vector<vector<double>>(number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
+	vector<vector<vector<double > > > s_K2(K2 - (K1 + 1)+1, vector<vector<double > > (number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
 
-	vector<vector<double>> s_search_direction_vector(number_of_parameters_from_copasi, vector<double>(1));
+	vector<vector<double > > s_search_direction_vector(number_of_parameters_from_copasi, vector<double>(1));
 
 	// 4-4 divide by 0.5
-	vector<vector<double>> working_vector_x(number_of_parameters_from_copasi, vector<double>(1));
-	vector<vector<double>> shrinked_s_broyden(number_of_parameters_from_copasi, vector<double>(1));
-	vector<vector<double>> X_K2_plus_1(number_of_parameters_from_copasi, vector<double>(1));
+	vector<vector<double > > working_vector_x(number_of_parameters_from_copasi, vector<double>(1));
+	vector<vector<double > > shrinked_s_broyden(number_of_parameters_from_copasi, vector<double>(1));
+	vector<vector<double > > X_K2_plus_1(number_of_parameters_from_copasi, vector<double>(1));
 	// all X matrices are saved in this 3 dimensional array 
 	// the first dimension of this matrix has to be K1+1 because of K1+1 is the number of iterations 
-	vector<vector<vector<double>>> Xs_K2(K2 - (K1 + 1) + 1, vector<vector<double>>(number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
-	vector<vector<double>> vector_matrix_random_points_x_broyden(number_of_parameters_from_copasi, vector<double>(1));
+	vector<vector<vector<double > > > Xs_K2(K2 - (K1 + 1) + 1, vector<vector<double> >(number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
+	vector<vector<double > > vector_matrix_random_points_x_broyden(number_of_parameters_from_copasi, vector<double>(1));
 	/********************************************************************************************
 	* END of variable declaration																*
 	*********************************************************************************************/
@@ -1760,7 +1762,7 @@ int main()
 		, xDach
 		);
 	
-	// convert double** matrix to a vector<vector<double>> matrix to use it in further steps
+	// convert double** matrix to a vector<vector<double > > matrix to use it in further steps
 	vector_matrix_random_points_x = func_double_star_star_to_vector_matrix(random_points, number_of_parameters_from_copasi, number_of_random_points);
 	
 	// Copy these x values to Xs_K1 to save them 
@@ -1817,9 +1819,9 @@ int main()
 		* the regression function uses the matrix of X^(k) and not the X~ ^(k) matrix	*
 		* So matrix which will be included is a m x l matrix.							*
 		*																				*
-		* The whole <vector<vector<double>> matrix Y is also a parameter of the function* 
+		* The whole <vector<vector<double > > matrix Y is also a parameter of the function* 
 		*																				*
-		* the function creates a vector<vector<double>> matrix A, which contains the	*
+		* the function creates a vector<vector<double > > matrix A, which contains the	*
 		* regression coefficients according to the matrix A^(k) on page B23.			*
 		*********************************************************************************/
 
@@ -2271,7 +2273,7 @@ int main()
 					for (int i = 0; i < number_of_parameters_from_copasi; i++)
 					{
 						Xs_K2[k - (K1 + 1) + 1][i][xl] = X_K2_plus_1[i][0];
-						//vector<vector<vector<double>>> Xs_K2(K2 - (K1 + 1) + 1, vector<vector<double>>(number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
+						//vector<vector<vector<double > > > Xs_K2(K2 - (K1 + 1) + 1, vector<vector<double>>(number_of_parameters_from_copasi, vector<double>(number_of_random_points)));
 					}
 
 					/********************************************************************************
